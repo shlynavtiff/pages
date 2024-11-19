@@ -35,7 +35,7 @@ const SignUpPageNav = () => {
                 <div className="hidden md:flex space-x-6 text-white gap-4">
 
                         <button className="bg-[#242424] py-2 rounded-md  px-4 border-[1px] cursor-pointerborder-[#414141] mt-1 hover:bg-[#414141] hidden md:block"><a href='/'>Sign In</a></button>
-                        <button className="bg-[#242424] py-2 rounded-md  px-4 border-[1px] cursor-pointerborder-[#414141] mt-1 hover:bg-[#414141] hidden md:block"><a href='sign-up'>Sign Up</a></button>
+                        <button className="bg-[#242424] py-2 rounded-md  px-4 border-[1px] cursor-pointerborder-[#414141] mt-1 hover:bg-[#414141] hidden md:block"><a href='/sign-up'>Sign Up</a></button>
                 </div>
 
                 {/* Hamburger Icon for Mobile */}
@@ -50,7 +50,7 @@ const SignUpPageNav = () => {
                     <a href="/" onClick={handleNav} className="text-2xl hover:text-gray-300">
                         Sign In 
                     </a>
-                    <a href="/bookmarked" onClick={handleNav} className="text-2xl hover:text-gray-300">
+                    <a href="/sign-up" onClick={handleNav} className="text-2xl hover:text-gray-300">
                         Sign Up
                     </a>
 

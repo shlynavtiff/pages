@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BookSearchNav from '../components/BookSearchNav';
 import BookCard from '../components/BookCard'; // Import BookCard component
 
@@ -7,6 +7,7 @@ const APP_KEY = import.meta.env.VITE_APP_KEY;
 
 const BookSearch = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [books, setBooks] = useState(location.state?.books || []);
   const [page, setPage] = useState(1);
   const [error, setError] = useState('');
@@ -47,7 +48,7 @@ const BookSearch = () => {
   };
 
   const handlePreviousPage = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 1));
+    setPage(prevPage => prevPage - 1);
     scrollToTop();
   };
 
@@ -57,6 +58,10 @@ const BookSearch = () => {
       behavior: 'smooth'
     });
   };
+
+  const handleBookClick = (bookId) => {
+    navigate(`/book/${bookId}`);
+  }
 
   return (
     <>
@@ -77,6 +82,7 @@ const BookSearch = () => {
                   authors={book.volumeInfo.authors || ["Unknown Author"]}
                   cover={book.volumeInfo.imageLinks?.thumbnail || ""}
                   publishDate={book.volumeInfo.publishedDate || "Unknown"}
+                  onClick={() => handleBookClick(book.id)} // Add onClick handler
                 />
               ))
             ) : (

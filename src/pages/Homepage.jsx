@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { FaSearch } from 'react-icons/fa';
 
 const APP_KEY = import.meta.env.VITE_APP_KEY;
 
@@ -13,32 +13,24 @@ const Homepage = () => {
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    if (query) {
-      const fetchedBooks = await fetchBooks();
-      if (fetchedBooks) {
-        navigate('/booksearch', { state: { books: fetchedBooks } });
+    if (query.trim()) {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${APP_KEY}&maxResults=12`
+        );
+        const data = await response.json();
+        if (data.items) {
+          navigate(`/booksearch?query=${encodeURIComponent(query)}`, { state: { books: data.items } });
+        } else {
+          setError('No books found');
+        }
+      } catch (error) {
+        setError('Failed to fetch books');
+      } finally {
+        setIsLoading(false);
       }
-    }
-  };
-
-  const fetchBooks = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${APP_KEY}&maxResults=12`
-      );
-      const data = await response.json();
-      if (data.items) {
-        return data.items;  // Return the fetched books
-      } else {
-        return [];
-      }
-    } catch (error) {
-      setError('Failed to fetch books');
-      return null;
-    } finally {
-      setIsLoading(false);
     }
   };
 
